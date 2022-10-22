@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Image } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 import LeftSideContent from "../LeftSideContent/LeftSideContent";
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="mb-2">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand>
+            <Link to="/">Bengal News</Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
@@ -31,9 +39,19 @@ const Header = () => {
               </NavDropdown>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets">More deets</Nav.Link>
               <Nav.Link eventKey={2} href="#memes">
-                Dank memes
+                {user.photoURL ? (
+                  <Image
+                    src={user?.photoURL}
+                    roundedCircle
+                    style={{ height: "30px" }}
+                  ></Image>
+                ) : (
+                  <FaUser></FaUser>
+                )}
+              </Nav.Link>
+              <Nav.Link href="#deets" className="mt-1">
+                {user?.displayName}
               </Nav.Link>
               <div className=" d-lg-none">
                 <LeftSideContent></LeftSideContent>

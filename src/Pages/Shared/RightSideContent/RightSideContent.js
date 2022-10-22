@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Carousel, ListGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -12,12 +12,32 @@ import {
   FaWhatsapp,
   FaTwitch,
 } from "react-icons/fa";
+import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const RightSideContent = () => {
+  const { signInProvider } = useContext(AuthContext);
+  const googleAuthProvider = new GoogleAuthProvider();
+
+  // Google Sign In Popup Method
+  const handleSignIn = () => {
+    signInProvider(googleAuthProvider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div>
       <ButtonGroup vertical>
-        <Button className="mb-2" variant="outline-primary">
+        <Button
+          onClick={handleSignIn}
+          className="mb-2"
+          variant="outline-primary"
+        >
           <FaGoogle></FaGoogle> Login with Google
         </Button>
         <Button className="mb-2" variant="outline-dark">

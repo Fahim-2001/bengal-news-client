@@ -10,7 +10,7 @@ const LeftSideContent = () => {
       .then((data) => setCategories(data));
   }, []);
   return (
-    <div className="d-none d-lg-block">
+    <div>
       <h4>All Categories:{categories.length}</h4>
       {categories.map((category) => (
         <p key={category.id}>
